@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mycompany.viewport_mini_web.dao.OrdersDao">
+	<insert id="insertOrderData" parameterType="Orders">
+		<selectKey keyProperty="oid" order="BEFORE" resultType="int">
+			SELECT seq_oid.nextval FROM dual
+		</selectKey>
+		insert into orders (
+		oid,odate, oname, ophone, ouserid, oaddress,
+		oaddressdetail, opostcode,
+		ototalprice, opaymethod, ostatus
+		) values (
+		#{oid},sysdate, #{oname}, #{ophone}, #{ouserid}, #{oaddress},
+		#{oaddressdetail}, #{opostcode}, #{ototalprice}, #{opaymethod},
+		#{ostatus}
+		)
+	</insert>
+	
+	<update id="updateStatusByOrderId" parameterType="Orders">
+		UPDATE orders
+		SET ostatus =
+		#{ostatus}
+		WHERE oid = #{oid}
+	</update>
+	
+	<select id="selectByPage" parameterType="Pager"
+		resultType="Orders">
+		<![CDATA[
+		select oid,odate,oaddress,ophone,oname,ouserid,oaddressdetail,ostatus,opostcode,ototalprice,opaymethod 
+		from (
+			select rownum as rnum, oid,odate,oaddress,ophone,oname,ouserid,oaddressdetail,ostatus,opostcode,ototalprice,opaymethod 
+			from (
+				select  oid,odate,oaddress,ophone,oname,ouserid,oaddressdetail,ostatus,opostcode,ototalprice,opaymethod 
+				from orders
+				order by oid desc
+				)
+			where rownum <= #{endRowNo}
+			)
+		where rnum >= #{startRowNo}
+		]]>
+	</select>
+
+	<select id="getTotalRows" resultType="int">
+		select count(*) from orders
+	</select>
+	<select id="getTotalSalesAmount" resultType="int">
+		select
+		sum(ototalprice) from orders
+	</select>
+	<resultMap id="OrderResultMap"
+		type="com.mycompany.viewport_mini_web.dto.Orders">
+		<id property="oid" column="oid" />
+		<result property="odate" column="odate" />
+		<result property="ophone" column="ophone" />
+		<result property="oname" column="oname" />
+		<result property="ouserid" column="ouserid" />
+		<result property="oaddress" column="oaddress" />
+		<result property="oaddressdetail" column="oaddressdetail" />
+		<result property="ostatus" column="ostatus" />
+		<result property="opostcode" column="opostcode" />
+		<result property="ototalprice" column="ototalprice" />
+		<result property="opaymethod" column="opaymethod" />
+
+		<collection property="orderItems"
+			ofType="com.mycompany.viewport_mini_web.dto.OrderItem">
+			<id property="oiid" column="oiid" />
+			<result property="oioid" column="oioid" />
+			<result property="oipid" column="oipid" />
+			<result property="oiqty" column="oiqty" />
+			<result property="oidate" column="oidate" />
+			<result property="oiprice" column="oiprice" />
+			<result property="oipname" column="pname" />
+		</collection>
+	</resultMap>
+
+	<select id="selectAllOrdersByUserId" resultMap="OrderResultMap">
+		<![CDATA[
+		 SELECT * FROM (
+        SELECT ROWNUM AS rnum, a.*
+        FROM (
+            SELECT o.*, i.*, p.pname
+            FROM orders o
+            JOIN orderitem i ON o.oid = i.oioid
+            JOIN product p ON i.oipid = p.pid
+            WHERE o.ouserid = #{ouserid}
+            ORDER BY o.odate DESC
+        ) a
+        WHERE ROWNUM <= #{pager.endRowNo}
+    )
+    WHERE rnum >= #{pager.startRowNo}
+	]]>
+	</select>
+
+
+	<select id="selectOrdersByOrderIdAndUserId" parameterType="int"
+		resultMap="OrderResultMap">
+		SELECT o.*, i.*, p.pname
+		FROM orders o
+		JOIN orderitem i
+		ON
+		o.oid = i.oioid
+		JOIN product p ON i.oipid = p.pid
+		WHERE o.ouserid =
+		#{ouserid} and o.oid = #{oid}
+		order by o.odate desc
+	</select>
+	<select id="totalOrderRowsByUserId" parameterType="int"
+		resultType="int">
+		select count(*) from orders
+		where ouserid=#{usid}
+	</select>
+</mapper>

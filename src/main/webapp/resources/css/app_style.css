@@ -1,0 +1,228 @@
+/* 네비게이션 바 브랜드를 중앙에 위치시키기 위한 CSS */
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap')
+	;
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+/* .navbar {
+  justify-content: center;
+  모든 항목을 중앙에 위치시킴
+}
+
+.navbar-brand {
+  position: absolute;
+  중앙에 위치하도록 절대 위치 사용
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+/* 섹션 전체 너비 설정 */
+.container-fluid {
+	padding-right: 0;
+	padding-left: 0;
+	margin-right: 0;
+	margin-left: 0;
+	width: 100%;
+}
+
+.container {
+	padding-right: 0;
+	padding-left: 0;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.search {
+	background-color: transparent;
+}
+
+/* 배경 영상을 위한 CSS */
+.video-background {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	/* 뷰포트의 높이를 기준으로 함 */
+	overflow: hidden;
+}
+
+.video-background iframe {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100vw;
+	height: 100vh;
+	border: none;
+}
+
+/* 배경 영상을 위한 CSS */
+.section1 {
+	position: relative;
+	height: 100vh;
+	/* 뷰포트 높이 기준 */
+	overflow: hidden;
+}
+
+.video-background iframe {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-index: -100;
+	/* 영상을 배경으로 */
+	filter: brightness(60%);
+}
+
+/* 텍스트 오버레이 스타일 */
+.overlay-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #fff;
+	/* 텍스트 색상 */
+	font-weight: bolder;
+	text-align: center;
+	z-index: 100;
+	/* 텍스트를 영상 위에 표시 */
+}
+
+.overlay-text h2 {
+	font-size: 120px;
+	/* h2 사이즈 조정 */
+}
+
+.section2 {
+	background-color: #393939;
+}
+
+.section-title {
+	color: #fff;
+	text-align: center;
+	padding-top: 30px;
+	margin-bottom: 30px;
+	cursor: default;
+}
+
+.card-container {
+	background-color: transparent;
+	padding: 60px;
+}
+
+.card-container {
+	background-color: transparent;
+	padding: 60px;
+}
+
+@media ( max-width : 550px) {
+	.card-container {
+		background-color: transparent;
+	}
+	.overlay-text h2 {
+		font-size: 50px;
+	}
+	.card-container {
+		padding: 0;
+	}
+}
+
+.card-container .col {
+	
+}
+
+.card-container .card {
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.card-container .card .card-img {
+	object-fit: cover;
+	object-position: 30% 80%;
+	height: 240px;
+}
+
+.card-container .card a {
+	color: #fff;
+}
+
+.card-container .card a .card-body>.lens {
+	color: #3BA0F8;
+	font-size: 10px;
+	font-weight: 500;
+	margin-bottom: 2px;
+}
+
+.card-container .card a:hover {
+	background-color: #f3f4f6;
+	transition: 0.5s;
+	color: #000;
+	border-radius: 10px;
+}
+
+/* .text-reset {
+	font-size: 12px;
+} */
+
+.section-title {
+	font-size: 30px;
+}
+
+.section-title {
+	animation: pulse 1s infinite alternate; /* 애니메이션 효과 추가 */
+}
+
+.section3 {
+	height: auto;
+	background-color: #fff;
+}
+.section3 .row::first-child{
+	padding: 0px 50px 50px 50px;
+}
+.section3 .row::last-child {
+	padding: 0px 50px 50px 50px;
+}
+
+.section3 p {
+	padding: 50px;
+}
+
+@media
+(
+max-width
+:
+1000px)
+{
+.img-fluid {
+	height: 500px;
+	width: auto;
+}
+
+}
+@
+keyframes pulse {from { transform:scale(1);
+	
+}
+
+to {
+	transform: scale(1.1);
+}
+}

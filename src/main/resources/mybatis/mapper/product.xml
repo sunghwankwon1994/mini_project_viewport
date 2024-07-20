@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper
+	namespace="com.mycompany.viewport_mini_web.dao.ProductDao">
+
+	<insert id="insert" parameterType="Product">
+		<selectKey keyProperty="pid" order="BEFORE" resultType="int">
+			select seq_pid.nextval from dual
+		</selectKey>
+		insert into product(
+		pid, pname, pprice, pinfo, pdetail,
+		pcategory,pattachoname,pattachsname,pattachtype,pattachdata, pshape,
+		pdate
+		) values(
+		#{pid}, #{pname},
+		#{pprice}, #{pinfo}, #{pdetail},
+		#{pcategory},#{pattachoname},#{pattachsname},#{pattachtype},#{pattachdata},
+		#{pshape}, sysdate
+		)
+	</insert>
+
+	<select id="selectCurrPid" parameterType="Product"
+		resultType="int">
+		select seq_pid.currval from dual
+	</select>
+
+	<select id="selectProductList" parameterType="Pager"
+		resultType="Product">
+		select
+		pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata,
+		pshape, pdate
+		from product
+
+	</select>
+
+	<select id="selectProductListByPager" parameterType="Pager"
+		resultType="Product">
+	<![CDATA[
+		select rnum, pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata, pshape, pdate
+		from (
+		    select rownum as rnum, pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata, pshape, pdate
+		    from (
+		        select pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata, pshape, pdate
+		        from product
+		        order by pid desc
+		    )
+		    where rownum <= #{endRowNo}
+		)
+		where rnum >= #{startRowNo}
+	]]>
+	</select>
+
+	<select id="selectProductListByFilterAndPager"
+		parameterType="Map" resultType="Product">
+   <![CDATA[
+      select rnum, pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata, pshape, pdate
+      from (
+          select rownum as rnum, pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata, pshape, pdate
+          from (
+              select pid,pname,pprice,pinfo,pdetail,pcategory,pattachsname,pattachtype,pattachdata, pshape, pdate
+              from product ]]>
+        <where>
+        	<if test="category != null">
+				and pcategory=#{category}
+			</if>
+			<if test="shape != null">
+				and pshape=#{shape}
+			</if> 			
+        </where>
+		order by
+			<if test="price=='lowPrice'">
+				pprice asc
+			</if>
+			<if test="price=='highPrice'">
+				pprice desc
+			</if>	
+			<if test="price != null and date != null">
+			,
+			</if>
+			<if test="date=='older'">
+				pdate asc
+			</if>
+			<if test="date=='newer'">
+				pdate desc
+			</if>	
+			<if test="price==null and date==null">
+				pid desc
+			</if>			
+			
+	             <![CDATA[
+          ) 
+          where rownum <= #{pager.endRowNo}
+      )
+      where rnum >= #{pager.startRowNo}
+   ]]>
+	</select>
+
+	<select id="selectByPid" parameterType="int"
+		resultType="Product">
+		select pid, pname, pprice, pinfo, pdetail,
+		pcategory,pattachoname,pattachsname,pattachtype,pattachdata, pshape,
+		pdate
+		from product
+		where pid=#{pid}
+	</select>
+
+	<select id="selectProductImg" parameterType="int"
+		resultType="Product">
+		select pattachdata from product where pid=#{pid}
+	</select>
+
+	<select id="count">
+		select count(*) from product
+	</select>
+
+	<select id="countByFilter" parameterType="String">
+		select count(*)
+		from product
+		<where>
+			<if test="category != null">
+				and pcategory=#{category}
+			</if>
+			<if test="shape != null">
+				and pshape=#{shape}
+			</if>
+		</where>
+
+	</select>
+
+	<update id="update" parameterType="Product">
+		update product set
+		pname=#{pname},pprice=#{pprice},pinfo=#{pinfo},pdetail=#{pdetail},pcategory=#{pcategory},
+		pshape=#{pshape}
+		<if test="pattachoname != null">
+			,
+			pattachoname=#{pattachoname},
+			pattachsname=#{pattachsname},
+			pattachtype=#{pattachtype},
+			pattachdata=#{pattachdata}
+		</if>
+		where pid=#{pid}
+	</update>
+
+	<delete id="deleteByPid" parameterType="int">
+		delete from product
+		where
+		pid=#{pid}
+	</delete>
+
+	<select id="selectProductListRandomly" resultType="Product">
+	<![CDATA[
+		select * from (
+		select * from product order by dbms_random.random
+		)
+		where rownum <= 6
+	]]>
+	</select>
+
+	<select id="selectSameModelByPname" parameterType="String"
+		resultType="Product">
+		select *
+		from product
+		where pname like '%'||substr(#{pname},
+		1, 2)||'%'
+		order by pname
+
+	</select>
+
+</mapper>
+
+

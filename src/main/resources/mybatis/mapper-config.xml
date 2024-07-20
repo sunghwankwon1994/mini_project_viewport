@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Users"
+			alias="User" />
+		<typeAlias
+			type="com.mycompany.viewport_mini_web.dto.Product" alias="Product" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Photos"
+			alias="Photos" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Pager"
+			alias="Pager" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Qna"
+			alias="Qna" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Branch"
+			alias="Branch" />
+		<typeAlias
+			type="com.mycompany.viewport_mini_web.dto.CartItem" alias="CartItem" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Notice"
+			alias="Notice" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Orders"
+			alias="Orders" />
+		<typeAlias
+			type="com.mycompany.viewport_mini_web.dto.Shipment" alias="Shipment" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.OrderItem"
+			alias="OrderItem" />
+		<typeAlias type="com.mycompany.viewport_mini_web.dto.Styles"
+			alias="Styles" />			
+	</typeAliases>
+</configuration>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mycompany.viewport_mini_web.dao.StylesDao">
+
+	<insert id="insert" parameterType="Styles">
+		<selectKey keyProperty="stid" order="BEFORE"
+			resultType="int">
+			select seq_stid.nextval from dual
+		</selectKey>
+		insert into styles(
+		stid, stpnum, stuserid,
+		stattachoname,stattachsname,stattachtype,stattachdata, sdate
+		) values(
+		#{stid}, #{stpnum},
+		#{stuserid}, #{stattachoname}, #{stattachsname},
+		#{stattachtype},#{stattachdata}, sysdate
+		)
+	</insert>
+
+	<select id="selectStylesListByPager" parameterType="Pager"
+		resultType="Styles">
+	<![CDATA[
+		select rnum, stid, stpnum, stuserid,
+		stattachoname,stattachsname,stattachtype,stattachdata, sdate
+		from (
+		    select rownum as rnum, stid, stpnum, stuserid, stattachoname,stattachsname,stattachtype,stattachdata, sdate
+		    from (
+		        select stid, stpnum, stuserid, stattachoname,stattachsname,stattachtype,stattachdata, sdate
+		        from styles
+		        order by stid desc
+		    )
+		    where rownum <= #{endRowNo}
+		)
+		where rnum >= #{startRowNo}
+	]]>
+	</select>
+
+	<select id="count">
+		select count(*) from styles
+	</select>
+
+	<select id="selectByStid" parameterType="int"
+		resultType="Styles">
+		select stid, stpnum, stuserid,
+		stattachoname,stattachsname,stattachtype,stattachdata, sdate
+		from styles
+		where
+		stid=#{stid}
+	</select>
+
+	<delete id="deleteByStid" parameterType="int">
+		delete from styles where
+		stid=#{stid}
+	</delete>
+	
+	<select id="selectStylesListRandomly" resultType="Styles">
+	<![CDATA[
+		select * from (
+		select * from styles order by dbms_random.random
+		)
+		where rownum <= 2
+	]]>
+	</select>	
+
+</mapper>

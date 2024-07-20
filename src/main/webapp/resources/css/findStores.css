@@ -1,0 +1,32 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+a{
+	text-decoration: none;
+	color: #000;
+}
+section img {
+    
+    cursor: pointer;
+    padding: 2px;
+}
+
+.box:hover {
+    border: 1px solid #000;
+}
+.branch{
+    margin-left: 10px;
+    margin-right:10px;
+    cursor: pointer;
+}
+.branch img{
+    padding: 2px;
+    border: 1px solid #fff;
+}
+.branch img:hover{
+    border: 1px solid #000;
+    transition: 0.7s;
+}

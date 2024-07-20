@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#images {
+    max-width: 50%; /* 최대 너비를 50%로 설정 */
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+#images img {
+	width: 70%;
+	height: 85vh;
+    margin-bottom: 10px;
+    border-radius: 13px;
+}
+
+.sidebar {
+    max-width: 50%; /* 사이드바의 최대 너비를 설정 */
+    position: sticky;
+    top: 70px;
+    margin-bottom: 50px;
+}
+
+.sidebar .sidebar-context {
+    width: 29.687vw;
+    margin-top: 30px;
+}
+
+.namePrice {
+    margin-bottom: 30px;
+}
+
+#productName {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+
+.sidebar .btn {
+    background-color: #fff;
+    border: 1px solid #000;
+    color: #000;
+    padding: 13px;
+    margin: 10px;
+    text-align: center;
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 13px;
+    width: 100%;
+    height: 50px;
+}
+
+.sidebarImgs {
+    margin-bottom: 20px;
+}
+
+.sidebarImgs img {
+    width: 4.895vw;
+    height: 6.25vw;
+    border-radius: 10px;
+}
+
+.sidebarImgs img:hover {
+  border: 1px solid #000;
+} 
+
+.sidebar .btn1 {
+    background-color: #000;
+    color: #fff;
+}
+
+#productInfo {
+    font-size: 13px;
+    line-height: 2;
+    padding: 10px;
+}
+
+
+.accordion-button {
+    font-size: 13px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #fff;
+}
+
+.accordion-body {
+    font-size: 12px;
+}
+
+
+.modal .modalText {
+    text-align: center;
+    font-size: 17px;
+    margin-top: 60px;
+}
+
+.modalButtons {
+    text-align: center;
+}
+
+.modalButtons button {
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+    margin-bottom: 60px;
+    border-radius: 8px;
+}
+
+.modalButtons .continueBtn {
+    background-color: #8c8a8a;
+    
+}
+
+.modalButtons .cartBtn {
+    background-color: #000;
+}

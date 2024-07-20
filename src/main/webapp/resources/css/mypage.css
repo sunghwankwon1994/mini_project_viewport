@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+html, body {
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+
+.container-fluid {
+	overflow-x: hidden;
+}
+.row {
+	margin-top:70px;
+}
+.right-box {
+	padding-left: 110px;
+	padding-right: 110px;
+}
+.sidebar {
+	height: 100vh;
+	background-color: #fff
+}
+
+.list-group-item {
+	background-color: transparent;
+}
+
+.card-body {
+	padding: 20px;
+}
+
+.list-group-item {
+	padding: 15px 20px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid #e0e0e0;
+}
+
+.list-group .list-group-item {
+	border: 1px solid #e0e0e0;
+	margin-top: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.list-group-item:hover {
+	/* background-color: rgb(231, 231, 231); */
+}
+
+.list-group-item.active {
+	background-color: #000;
+	color: white;
+}
+
+.btn-link {
+	font-weight: bold;
+	color: #007bff;
+}
+
+.badge {
+	background-color: #ffc107;
+}
+
+.pagination-center {
+	text-align: center;
+	margin: 30px;
+}
+
+.pagination {
+	display: inline-block;
+}
+
+.pagination a {
+	color: #656464;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.pagination a.active {
+	color: #000;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.order-detail-btn {
+	margin-left: auto;
+	margin-right: 10px;
+	width:20%;
+}
+.shipment-info-btn {
+	
+	margin-right: auto;
+	width:20%
+}
+
+.pagination
+ 
+a
+:hover
+:not
+(
+.active
+ 
+)
+{
+font-weight
+:
+ 
+bold
+;
+
+
+}
+.pagination a:first-child {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}

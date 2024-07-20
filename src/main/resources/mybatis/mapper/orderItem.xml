@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mycompany.viewport_mini_web.dao.OrderItemDao">
+	<insert id="insertOrderItemData" parameterType="OrderItem">
+		<selectKey keyProperty="oiid" order="BEFORE" resultType="int">
+			select seq_oiid.nextval from dual
+		</selectKey>
+		insert into orderitem(
+		oiid, oiqty, oiprice, oidate,oipid,oioid
+		) values(
+		#{oiid},#{oiqty},#{oiprice},sysdate,#{oipid},seq_oid.currval
+		)
+	</insert>
+<select id="getItemsByOrderIdAndUserId" parameterType="int">
+	
+</select>
+</mapper>

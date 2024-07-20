@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper
+	namespace="com.mycompany.viewport_mini_web.dao.ShipmentDao">
+	<insert id="insertShipmentData" parameterType="Shipment">
+		<selectKey keyProperty="sid" order="BEFORE"
+			resultType="int">
+			select seq_sid.nextval from dual
+		</selectKey>
+		insert into shipment(
+		sid,srequest,suserid,stype,soid
+		)
+		values(
+		#{sid},#{srequest},#{suserid},#{stype},seq_oid.currval
+		)
+	</insert>
+	<select id="getShipmentDataByOrderId" parameterType="int" resultType="Shipment">
+		select * from shipment
+		where soid = #{soid}
+	</select>
+	<update id="updateShipmentByOrderId">
+	UPDATE shipment
+		SET sshipmentnum =#{sshipmentnum},sdate=sysdate
+		WHERE soid = #{soid}
+	</update>
+</mapper>

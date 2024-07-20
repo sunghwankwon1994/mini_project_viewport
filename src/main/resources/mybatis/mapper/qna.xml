@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mycompany.viewport_mini_web.dao.QnaDao">
+	<insert id="insertNewPost" parameterType="Qna">
+		<selectKey keyProperty="qid" order="BEFORE" resultType="int">
+			select seq_qid.nextval from dual
+		</selectKey>
+		insert into
+		qna(qid,qtitle,qdate,qcontent,quserid,qattachdata,qattachoname,qattachsname,qattachtype,qcategory,qstatus)
+		values(#{qid},#{qtitle},sysdate,#{qcontent},#{quserid},#{qattachdata},#{qattachoname},#{qattachsname},#{qattachtype},#{qcategory},#{qstatus})
+	</insert>
+	<select id="selectQnaAll" resultType="Qna">
+		select
+		qid,qtitle,qdate,qcategory,quserid from qna order by qid desc
+	</select>
+
+	<select id="findPostsByUserId" parameterType="int"
+		resultType="Qna">
+		select * from qna
+		where quserid=#{quserid}
+	</select>
+	<select id="selectByQid" parameterType="int" resultType="Qna">
+		select
+		qid,qtitle,qdate,qcategory,quserid,qcontent,qattachdata,qattachsname,qattachoname,qattachtype,qattachdata
+		from qna
+		where qid = #{qid}
+	</select>
+	<select id="count">
+		select count(*) from qna
+	</select>
+	<select id="getTotalBoardRowsByUserId" parameterType="int">
+		select count(*) from qna
+		where quserid = #{usid}
+	</select>
+	<select id="selectByPage" parameterType="Pager" resultType="Qna">
+		<![CDATA[
+		select rnum, qid,qtitle,qdate,qcategory,quserid,qcontent,qstatus, qattachdata,qattachsname,qattachoname,qattachtype
+		from (
+			select rownum as rnum, qid,qtitle,qdate,qcategory,quserid,qcontent,qstatus, qattachdata,qattachsname,qattachoname,qattachtype
+			from (
+				select  *
+				from qna
+				order by qid desc
+				)
+			where rownum <= #{endRowNo}
+			)
+		where rnum >= #{startRowNo}
+		
+		]]>
+	</select>
+	
+	<update id="update" parameterType="Qna">
+		update qna set
+		qtitle=#{qtitle},qcategory=#{qcategory},qcontent=#{qcontent}
+		<if test="qattachoname != null">
+			,
+			qattachoname=#{qattachoname},
+			qattachsname=#{qattachsname},
+			qattachtype=#{qattachtype},
+			qattachdata=#{qattachdata}
+		</if>
+		where qid=#{qid}
+	</update>	
+	
+	<delete id="deleteByQid" parameterType="int">
+		delete from qna where qid=#{qid}
+	</delete>
+		
+</mapper>

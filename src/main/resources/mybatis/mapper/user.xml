@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mycompany.viewport_mini_web.dao.UserDao">
+
+	<insert id="insert" parameterType="User">
+		<selectKey keyProperty="usid" order="BEFORE"
+			resultType="int">
+			select seq_usid.nextval from dual
+		</selectKey>
+		insert into
+		users(usid,upassword,uname,uemail,uphonenumber,uaddress,uaddressdetail,urole,uenabled,ussn,udate,upostcode)
+		values(#{usid},
+		#{upassword},#{uname},#{uemail},#{uphonenumber},#{uaddress},
+		#{uaddressdetail},#{urole},#{uenabled},#{ussn},sysdate,#{upostcode}
+		)
+	</insert>
+
+
+	<select id="checkDuplicateEmail" parameterType="String">
+		select count(*) from users
+		where uemail = #{uemail}
+	</select>
+	
+	
+	<update id="updatePw">
+	    UPDATE users
+	    SET upassword=#{upassword}
+	    WHERE uemail=#{uemail}
+	</update>
+
+
+	<select id="selectByEmailAndNameAndPhoneNumber"
+		resultType="User">
+		SELECT *
+		FROM users
+		WHERE uemail = #{uemail}
+		AND uname = #{uname}
+		AND uphonenumber = #{uphonenumber}
+	</select>
+	
+	
+	
+	<select id="selectByUemail" parameterType="String"
+		resultType="User">
+		select usid,
+		uemail,upassword,uname,ugender,uphonenumber,uaddress,uaddressdetail,urole,uenabled,isdeleted,upostcode
+		from users
+		where uemail = #{uemail}
+	</select>
+	<select id="getUserCount" resultType="int">
+	select count(*) from users
+	</select>
+	<select id="selectuserAll">
+		select usid,
+		uemail,upassword,uname,ugender,uphonenumber,uaddress,uaddressdetail,urole,uenabled
+		from users
+	</select>
+
+	<update id="update" parameterType="User">
+		update users set
+		uname=#{uname},uemail=#{uemail},ugender=#{ugender},uphonenumber=#{uphonenumber},uaddress=#{uaddress},uaddressdetail=#{uaddressdetail},urole=#{urole}
+		where usid=#{usid}
+	</update>
+
+	<delete id="deleteByUsid" parameterType="int">
+		delete from users where usid=#{usid}
+	</delete>
+	<select id="count">
+		select count(*) from users
+	</select>
+
+	<select id="selectByPage" parameterType="Pager"
+		resultType="User">
+		<![CDATA[
+		select usid,uname,uemail,upassword,uaddress,uaddressdetail,ugender,urole,uphonenumber 
+		from (
+			select rownum as rnum, usid,uname,uemail,upassword,uaddress,uaddressdetail,ugender,urole,uphonenumber
+			from (
+				select  usid,uname,uemail,upassword,uaddress,uaddressdetail,ugender,urole,uphonenumber
+				from users
+				order by usid desc
+				)
+			where rownum <= #{endRowNo}
+			)
+		where rnum >= #{startRowNo}
+		]]>
+	</select>
+	<update id="updateByUemail" parameterType="User">
+		update users set
+		uname=#{uname},uemail=#{uemail},ugender=#{ugender},uphonenumber=#{uphonenumber},uaddress=#{uaddress},uaddressdetail=#{uaddressdetail}
+		where uemail=#{uemail}
+	</update>
+	<update id="updatePasswordByUemail" parameterType="hashMap">
+		update users set upassword=#{upassword} where uemail=#{uemail}
+	</update>
+
+	<update id="deleteByUemail" parameterType="String">
+	update users set isdeleted=true where uemail=#{uemail}
+	
+	</update>
+	<select id="selectByUsid" parameterType="int" resultType="String">
+	select uemail from users where usid =#{usid}
+	</select>
+	
+
+</mapper>
